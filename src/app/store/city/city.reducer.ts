@@ -1,7 +1,7 @@
-import {City} from '../../select-city/city';
 import { Dictionary } from 'lodash';
 import {CityActions, CityActionTypes} from './city.actions';
 import * as _ from 'lodash';
+import {City} from '../../cities/select-routes/city';
 
 
 export class CityState {
@@ -9,7 +9,7 @@ export class CityState {
 }
 
 export const initState: CityState = {
-  cities: {}
+  cities: null
 };
 
 export function reducer(state = initState, action: CityActions) {

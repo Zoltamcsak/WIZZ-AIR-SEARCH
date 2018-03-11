@@ -2,7 +2,7 @@ import * as fromCities from './city';
 import {ActionReducerMap} from '@ngrx/store';
 
 export class State {
-  cities: fromCities.CityState;
+  cityState: fromCities.CityState;
 }
 
 export function initState(): State {
@@ -10,5 +10,5 @@ export function initState(): State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  cities: fromCities.reducer
+  cityState: fromCities.reducer
 };

@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {City} from '../../select-city/city';
+import {City} from '../../cities/select-routes/city';
 
 export enum CityActionTypes {
   GET_ALL_CITIES = '[Cities] Get all cities',

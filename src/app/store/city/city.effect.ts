@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
-import {SelectCityService} from '../../select-city/select-city.service';
 import {CityActionTypes, GetAllCitiesSuccess} from './city.actions';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import {SelectCityService} from '../../cities/select-routes/select-city.service';
 
 @Injectable()
 export class CityEffect {
