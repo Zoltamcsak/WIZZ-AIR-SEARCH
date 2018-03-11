@@ -1,11 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CitiesComponent} from './cities.component';
-import {MatAutocompleteModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {SelectRoutesComponent} from './select-routes/select-routes.component';
 import {SelectCityService} from './select-routes/select-city.service';
 import {SelectCityComponent} from './select-city/select-city.component';
+import {FlightDateSelectionComponent} from './date-selection/flight-date-selection.component';
+import {DatePickerComponent} from './date-selection/date-picker/date-picker.component';
+import {FlightPickerComponent} from './flight-picker.component';
 
 @NgModule({
   imports: [
@@ -13,16 +16,23 @@ import {SelectCityComponent} from './select-city/select-city.component';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
     CommonModule
   ],
   declarations: [
     CitiesComponent,
     SelectRoutesComponent,
-    SelectCityComponent
+    SelectCityComponent,
+    FlightDateSelectionComponent,
+    DatePickerComponent,
+    FlightPickerComponent
   ],
   exports: [
-    CitiesComponent
+    CitiesComponent,
+    FlightDateSelectionComponent,
+    FlightPickerComponent
   ],
   providers: [
     SelectCityService
