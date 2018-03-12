@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
   template: `
     <wizz-cities [flightForm]='flightForm'></wizz-cities>
     <wizz-flight-date-selection [flightForm]='flightForm'></wizz-flight-date-selection>
+    <button mat-button>Search</button>    
   `
 })
 export class FlightPickerComponent {

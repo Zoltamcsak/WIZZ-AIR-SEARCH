@@ -9,6 +9,7 @@ import {SelectCityComponent} from './select-city/select-city.component';
 import {FlightDateSelectionComponent} from './date-selection/flight-date-selection.component';
 import {DatePickerComponent} from './date-selection/date-picker/date-picker.component';
 import {FlightPickerComponent} from './flight-picker.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import {FlightPickerComponent} from './flight-picker.component';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatButtonModule,
     FormsModule,
     CommonModule
   ],
