@@ -4,18 +4,18 @@ import {Dictionary} from 'lodash';
 import {FormGroup} from '@angular/forms';
 import {SelectCityService} from './select-city.service';
 
+export const ORIGIN_FORM_CONTROL = 'origin';
+export const DESTINATION_FORM_CONTROL = 'destination';
+
 @Component({
   selector: 'wizz-select-routes',
   template: `
-    <form class="example-form">
-      <wizz-select-city [cities]='cityArray'
-                        [form]='form.controls["origin"]'
-                        (citySelected)='onOriginSelected($event)'></wizz-select-city>
-      <wizz-select-city [cities]='connectionCities'
-                        [form]='form.controls["destination"]'
-                        (citySelected)='onDestinationSelected($event)'
-      ></wizz-select-city>
-    </form>
+    <wizz-select-city [cities]='cityArray'
+                      [form]='form.controls[originFormCtrlString]'
+                      (citySelected)='onOriginSelected($event)'></wizz-select-city>
+    <wizz-select-city [cities]='connectionCities'
+                      [form]='form.controls[destinationFormCtrlString]'
+                      (citySelected)='onDestinationSelected($event)'></wizz-select-city>
   `
 })
 export class SelectRoutesComponent implements OnInit {
@@ -24,17 +24,20 @@ export class SelectRoutesComponent implements OnInit {
 
   public cityArray: City[];
   public connectionCities: City[] = [];
+  public originFormCtrlString = ORIGIN_FORM_CONTROL;
+  public destinationFormCtrlString = DESTINATION_FORM_CONTROL;
 
   constructor(private selectCityService: SelectCityService) {}
 
   ngOnInit() {
     this.cityArray = Object.values(this.cities);
-    this.form.controls['destination'].disable();
+    this.form.controls[this.destinationFormCtrlString].disable();
   }
 
   onOriginSelected(city: City): void {
     this.connectionCities = this.selectCityService.getCitiesFromConnections(city.connections, this.cities);
-    this.form.controls['destination'].enable();
+    this.form.controls[this.destinationFormCtrlString].enable();
+    this.form.controls[this.destinationFormCtrlString].setValue('');
   }
 
   onDestinationSelected(city: City): void {

@@ -3,6 +3,7 @@ import {City} from '../select-routes/city';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {map, startWith} from 'rxjs/operators';
+import {cityInListValidator} from '../shared/validators';
 
 @Component({
   selector: 'wizz-select-city',
@@ -27,10 +28,10 @@ export class SelectCityComponent implements OnInit, OnChanges {
   public filteredCities$: Observable<City[]>;
 
   ngOnInit(): void {
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.form.setValidators([cityInListValidator(this.cities)]);
     this.filteredCities$ = this.form.valueChanges.pipe(
       startWith(''),
       map(value => this.filter(this.cities, value))
