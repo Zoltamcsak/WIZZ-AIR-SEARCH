@@ -5,6 +5,7 @@ import {State} from '../store/reducer';
 import {AddDepartDate, AddDestinationByShortName, AddOriginByShortName, AddReturnDate} from '../store/city';
 import {DESTINATION_FORM_CONTROL, ORIGIN_FORM_CONTROL} from './select-routes/select-routes.component';
 import {DEPARTURE_DATE_FORM_CONTROL, RETURN_DATE_FORM_CONTROL} from './date-selection/flight-date-selection.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'wizz-flight-picker',
@@ -12,7 +13,8 @@ import {DEPARTURE_DATE_FORM_CONTROL, RETURN_DATE_FORM_CONTROL} from './date-sele
     <form [formGroup]='flightForm' (ngSubmit)='onFormSubmit(flightForm.value)'>
       <wizz-cities [flightForm]='flightForm'></wizz-cities>
       <wizz-flight-date-selection [flightForm]='flightForm'></wizz-flight-date-selection>
-      <button type='submit' mat-button [disabled]='!flightForm.valid'>Search</button>
+      <button type='submit' mat-button
+              [disabled]='!flightForm.valid'>Search</button>
     </form>
   `
 })
@@ -20,7 +22,8 @@ export class FlightPickerComponent {
   public flightForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private store$: Store<State>) {
+              private store$: Store<State>,
+              private router: Router) {
     this.flightForm = this.createFlightForm(formBuilder);
   }
 
@@ -42,5 +45,6 @@ export class FlightPickerComponent {
     this.store$.dispatch(new AddDestinationByShortName(value[DESTINATION_FORM_CONTROL]));
     this.store$.dispatch(new AddDepartDate(value[DEPARTURE_DATE_FORM_CONTROL]));
     this.store$.dispatch(new AddReturnDate(value[RETURN_DATE_FORM_CONTROL]));
+    this.router.navigate(['select-flight']);
   }
 }

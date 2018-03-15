@@ -6,12 +6,12 @@ import {Dictionary, map} from 'lodash';
 
 @Injectable()
 export class SelectCityService {
-
+  public baseUrl = '/api';
 
   constructor(private httpClient: HttpClient) {}
 
   getAllCities(): Observable<any> {
-    return this.httpClient.get('/api/asset/stations');
+    return this.httpClient.get(`${this.baseUrl}/asset/stations`);
   }
 
   getCitiesFromConnections(connections: Connection[], cities: Dictionary<City>): City[] {

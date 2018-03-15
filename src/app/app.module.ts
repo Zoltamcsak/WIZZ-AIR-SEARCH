@@ -12,7 +12,16 @@ import {CitiesModule} from './cities/cities.module';
 import {environment} from '../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule, Routes} from '@angular/router';
+import {FlightPickerComponent} from './cities/flight-picker.component';
+import {SelectFlightModule} from './select-flight/select-flight.module';
+import {SelectFlightContainerComponent} from './select-flight/select-flight-container';
+import {SelectFlightEffect} from './store/select-flight/select-flight.effect';
 
+const appRoutes: Routes = [
+  { path: '', component: FlightPickerComponent },
+  { path: 'select-flight', component: SelectFlightContainerComponent },
+];
 
 @NgModule({
   declarations: [
@@ -23,8 +32,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HttpClientModule,
     CitiesModule,
     BrowserAnimationsModule,
+    SelectFlightModule,
+    RouterModule.forRoot(
+      appRoutes
+    ),
     StoreModule.forRoot(reducers, {initialState: initState}),
-    EffectsModule.forRoot([CityEffect]),
+    EffectsModule.forRoot([
+      CityEffect,
+      SelectFlightEffect
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production // Restrict extension to log-only mode
