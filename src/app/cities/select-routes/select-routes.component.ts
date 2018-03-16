@@ -3,6 +3,7 @@ import {City} from './city';
 import {Dictionary} from 'lodash';
 import {FormGroup} from '@angular/forms';
 import {SelectCityService} from './select-city.service';
+import {getElementFromLocalStorage, setElementToLocalStorage} from '../../utils/local-storage.utils';
 
 export const ORIGIN_FORM_CONTROL = 'origin';
 export const DESTINATION_FORM_CONTROL = 'destination';
@@ -31,16 +32,22 @@ export class SelectRoutesComponent implements OnInit {
 
   ngOnInit() {
     this.cityArray = Object.values(this.cities);
-    this.form.controls[this.destinationFormCtrlString].disable();
+    if (this.form.controls[ORIGIN_FORM_CONTROL].value) {
+      const originCity = <City>getElementFromLocalStorage(ORIGIN_FORM_CONTROL);
+      this.connectionCities = this.selectCityService.getCitiesFromConnections(originCity.connections, this.cities);
+    } else {
+      this.form.controls[this.destinationFormCtrlString].disable();
+    }
   }
 
   onOriginSelected(city: City): void {
+    setElementToLocalStorage(ORIGIN_FORM_CONTROL, city);
     this.connectionCities = this.selectCityService.getCitiesFromConnections(city.connections, this.cities);
     this.form.controls[this.destinationFormCtrlString].enable();
     this.form.controls[this.destinationFormCtrlString].setValue('');
   }
 
   onDestinationSelected(city: City): void {
-    console.log(city);
+    setElementToLocalStorage(DESTINATION_FORM_CONTROL, city);
   }
 }

@@ -6,6 +6,8 @@ import {AddDepartDate, AddDestinationByShortName, AddOriginByShortName, AddRetur
 import {DESTINATION_FORM_CONTROL, ORIGIN_FORM_CONTROL} from './select-routes/select-routes.component';
 import {DEPARTURE_DATE_FORM_CONTROL, RETURN_DATE_FORM_CONTROL} from './date-selection/flight-date-selection.component';
 import {Router} from '@angular/router';
+import {City} from './select-routes/city';
+import {getElementFromLocalStorage} from '../utils/local-storage.utils';
 
 @Component({
   selector: 'wizz-flight-picker',
@@ -20,17 +22,21 @@ import {Router} from '@angular/router';
 })
 export class FlightPickerComponent {
   public flightForm: FormGroup;
+  public localStorageOrigin: City;
+  public localStorageDestination: City;
 
   constructor(private formBuilder: FormBuilder,
               private store$: Store<State>,
               private router: Router) {
+    this.localStorageOrigin = getElementFromLocalStorage('origin');
+    this.localStorageDestination = getElementFromLocalStorage('destination');
     this.flightForm = this.createFlightForm(formBuilder);
   }
 
   createFlightForm(formBuilder: FormBuilder): FormGroup {
     return formBuilder.group({
-      origin: '',
-      destination: '',
+      origin: !!this.localStorageOrigin ? this.localStorageOrigin.shortName : '',
+      destination: !!this.localStorageDestination ? this.localStorageDestination.shortName : '',
       departDate: new Date(),
       returnDate: ''
     });
