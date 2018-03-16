@@ -1,0 +1,9 @@
+.card-container {
+  display: flex;
+  .flight-card {
+    height: 50px;
+    width: 50px;
+    margin: 20px;
+    text-align: center;
+  }
+}

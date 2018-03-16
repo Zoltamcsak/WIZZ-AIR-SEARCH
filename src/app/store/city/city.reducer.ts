@@ -52,9 +52,10 @@ export function reducer(state = initState, action: CityActions): CityState {
     }
 
     case CityActionTypes.ADD_RETURN_DATE: {
+      const departDate = action.payload ? action.payload : null;
       return {
         ...state,
-        returnDate: action.payload
+        returnDate: departDate
       };
     }
     default:

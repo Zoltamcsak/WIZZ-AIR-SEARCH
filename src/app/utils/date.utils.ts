@@ -17,3 +17,7 @@ export function formatDate(date: Date) {
 
   return [year, month, day].join('-');
 }
+
+export function getNextDay(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth() + 1, date.getDate() + 1);
+}

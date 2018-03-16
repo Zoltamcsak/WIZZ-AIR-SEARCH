@@ -34,7 +34,8 @@ import {MatButtonModule} from '@angular/material/button';
   exports: [
     CitiesComponent,
     FlightDateSelectionComponent,
-    FlightPickerComponent
+    FlightPickerComponent,
+    DatePickerComponent
   ],
   providers: [
     SelectCityService

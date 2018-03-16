@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup, Validators} from '@angular/forms';
+import {getNextDay} from '../../utils/date.utils';
 
 export const DEPARTURE_DATE_FORM_CONTROL = 'departDate';
 export const RETURN_DATE_FORM_CONTROL = 'returnDate';
@@ -25,16 +26,12 @@ export class FlightDateSelectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.minDepartureDate = new Date();
-    this.minReturnDate = this.getNextDay(this.flightForm.controls[this.departDateString].value);
+    this.minReturnDate = getNextDay(this.flightForm.controls[this.departDateString].value);
     this.flightForm.controls[this.departDateString].setValidators([Validators.required]);
   }
 
   onDepartureDateChange(date: Date): void {
-    this.minReturnDate = this.getNextDay(date);
+    this.minReturnDate = getNextDay(date);
     this.flightForm.controls[this.returnDateString].setValue('');
-  }
-
-  getNextDay(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth() + 1, date.getDate() + 1);
   }
 }

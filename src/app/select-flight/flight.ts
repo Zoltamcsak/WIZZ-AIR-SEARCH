@@ -2,7 +2,7 @@ export interface Flight {
   carrierCode: string;
   flightNumber: string;
   remainingTickets: number;
-  deprature: Date;
+  departure: Date;
   arrival: Date;
   fares: Fare[];
 }

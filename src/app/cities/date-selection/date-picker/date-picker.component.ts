@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -17,9 +17,15 @@ import {FormControl} from '@angular/forms';
     </mat-form-field>
   `
 })
-export class DatePickerComponent {
+export class DatePickerComponent implements OnInit {
   @Input() minDate: Date;
   @Input() placeholder: string;
   @Input() dateFormCtrl: FormControl;
   @Output() dateChange: EventEmitter<Date> = new EventEmitter();
+
+  ngOnInit(): void {
+    if (!this.dateFormCtrl) {
+      this.dateFormCtrl = new FormControl();
+    }
+  }
 }
