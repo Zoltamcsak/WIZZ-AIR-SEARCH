@@ -42,6 +42,7 @@ export class SelectRoutesComponent implements OnInit {
 
   onOriginSelected(city: City): void {
     setElementToLocalStorage(ORIGIN_FORM_CONTROL, city);
+    setElementToLocalStorage(DESTINATION_FORM_CONTROL, null);
     this.connectionCities = this.selectCityService.getCitiesFromConnections(city.connections, this.cities);
     this.form.controls[this.destinationFormCtrlString].enable();
     this.form.controls[this.destinationFormCtrlString].setValue('');

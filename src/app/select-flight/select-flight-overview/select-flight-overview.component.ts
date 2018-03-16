@@ -20,7 +20,7 @@ import 'rxjs/add/operator/skip';
                               [selectedFare]='selectedFare'
                               (selectFare)='onSelectOriginFare($event)'></wizz-flight-categories>
     </ng-container>
-    <ng-container *ngIf='returnDate; else missingReturnDate'>
+    <ng-container *ngIf='returnDate && (returnFlights$ | async)?.length; else missingReturnDate'>
       <div>
         {{destinationCity?.shortName}} => {{originCity?.shortName}}
       </div>
@@ -30,6 +30,7 @@ import 'rxjs/add/operator/skip';
                                 (selectFare)='onSelectReturnFare($event)'></wizz-flight-categories>
       </ng-container>
     </ng-container>
+    <p *ngIf='returnDate && !(returnFlights$ | async)?.length'>No flights on this date</p>
     <ng-template #missingReturnDate>
       <wizz-date-picker [placeholder]='"Select return date"'
                         [minDate]='minReturnDate'
