@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {City} from '../../cities/select-routes/city';
 import {Store} from '@ngrx/store';
 import {State} from '../../store/reducer';
@@ -18,7 +18,7 @@ import 'rxjs/add/operator/skip';
     <ng-container *ngFor='let flight of originFlights$ | async'>
       <wizz-flight-categories [flight]='flight'
                               [selectedFare]='selectedFare'
-                              (selectFare)='selectedFare = $event'></wizz-flight-categories>
+                              (selectFare)='onSelectOriginFare($event)'></wizz-flight-categories>
     </ng-container>
     <ng-container *ngIf='returnDate; else missingReturnDate'>
       <div>
@@ -27,7 +27,7 @@ import 'rxjs/add/operator/skip';
       <ng-container *ngFor='let flight of returnFlights$ | async'>
         <wizz-flight-categories [flight]='flight'
                                 [selectedFare]='selectedReturnFare'
-                                (selectFare)='selectedReturnFare = $event'></wizz-flight-categories>
+                                (selectFare)='onSelectReturnFare($event)'></wizz-flight-categories>
       </ng-container>
     </ng-container>
     <ng-template #missingReturnDate>
@@ -42,6 +42,8 @@ export class SelectFlightOverviewComponent implements OnInit {
   @Input() destinationCity: City;
   @Input() departDate: Date;
   @Input() returnDate: Date;
+  @Output() selectOriginFare: EventEmitter<Fare> = new EventEmitter<Fare>();
+  @Output() selectReturnFare: EventEmitter<Fare> = new EventEmitter<Fare>();
 
   public originFlights$: Observable<Flight[]>;
   public returnFlights$: Observable<Flight[]>;
@@ -90,5 +92,15 @@ export class SelectFlightOverviewComponent implements OnInit {
     this.returnDate = date;
     const returnDate = formatDate(date);
     this.store$.dispatch(new GetReturnFlight({origin: this.destinationCity.iata, destination: this.originCity.iata, date: returnDate}));
+  }
+
+  onSelectOriginFare(fare: Fare): void {
+    this.selectedFare = fare;
+    this.selectOriginFare.emit(fare);
+  }
+
+  onSelectReturnFare(fare: Fare): void {
+    this.selectedReturnFare = fare;
+    this.selectReturnFare.emit(fare);
   }
 }

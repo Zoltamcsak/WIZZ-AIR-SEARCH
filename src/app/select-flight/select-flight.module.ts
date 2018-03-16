@@ -8,6 +8,8 @@ import {FlightCategoriesComponent} from './flight-categories/flight-categories.c
 import {BrowserModule} from '@angular/platform-browser';
 import {MatCardModule} from '@angular/material';
 import {CitiesModule} from '../cities/cities.module';
+import {SelectFlightDetailsComponent} from './select-flight-details/select-flight-details.component';
+import {FlightDetailComponent} from './select-flight-details/flight-detail.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import {CitiesModule} from '../cities/cities.module';
   declarations: [
     SelectFlightContainerComponent,
     SelectFlightOverviewComponent,
-    FlightCategoriesComponent
+    FlightCategoriesComponent,
+    SelectFlightDetailsComponent,
+    FlightDetailComponent
   ],
   providers: [
     SelectFlightService
