@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {Flight} from '../flight';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Fare, Flight} from '../flight';
 
 @Component({
   selector: 'wizz-flight-categories',
@@ -8,7 +8,9 @@ import {Flight} from '../flight';
     <div class='card-container'>
       <ng-container *ngIf='flight?.remainingTickets > 0; else noTickets'>
         <ng-container *ngFor='let fare of flight?.fares'>
-          <mat-card class='flight-card'>
+          <mat-card class='flight-card'
+                    [class.selected]='fare.fareSellKey == selectedFare?.fareSellKey'
+                    (click)='selectFare.emit(fare)'>
             <span>{{fare.bundle}}</span>
             <span>{{fare.price}}</span>
           </mat-card>
@@ -21,4 +23,6 @@ import {Flight} from '../flight';
 })
 export class FlightCategoriesComponent {
   @Input() public flight: Flight;
+  @Input() public selectedFare: Fare;
+  @Output() public selectFare: EventEmitter<Fare> = new EventEmitter<Fare>();
 }

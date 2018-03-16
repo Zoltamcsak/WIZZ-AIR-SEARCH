@@ -3,7 +3,7 @@ import {City} from '../../cities/select-routes/city';
 import {Store} from '@ngrx/store';
 import {State} from '../../store/reducer';
 import {Observable} from 'rxjs/Observable';
-import {Flight} from '../flight';
+import {Fare, Flight} from '../flight';
 import {GetFlight, GetReturnFlight} from '../../store/select-flight';
 import {formatDate, getNextDay} from '../../utils/date.utils';
 import {Router} from '@angular/router';
@@ -16,14 +16,18 @@ import 'rxjs/add/operator/skip';
       {{originCity?.shortName}} => {{destinationCity?.shortName}}
     </div>
     <ng-container *ngFor='let flight of originFlights$ | async'>
-      <wizz-flight-categories [flight]='flight'></wizz-flight-categories>
+      <wizz-flight-categories [flight]='flight'
+                              [selectedFare]='selectedFare'
+                              (selectFare)='selectedFare = $event'></wizz-flight-categories>
     </ng-container>
     <ng-container *ngIf='returnDate; else missingReturnDate'>
       <div>
         {{destinationCity?.shortName}} => {{originCity?.shortName}}
       </div>
       <ng-container *ngFor='let flight of returnFlights$ | async'>
-        <wizz-flight-categories [flight]='flight'></wizz-flight-categories>
+        <wizz-flight-categories [flight]='flight'
+                                [selectedFare]='selectedReturnFare'
+                                (selectFare)='selectedReturnFare = $event'></wizz-flight-categories>
       </ng-container>
     </ng-container>
     <ng-template #missingReturnDate>
@@ -42,6 +46,8 @@ export class SelectFlightOverviewComponent implements OnInit {
   public originFlights$: Observable<Flight[]>;
   public returnFlights$: Observable<Flight[]>;
   public minReturnDate: Date;
+  public selectedFare: Fare;
+  public selectedReturnFare: Fare;
 
   constructor(private store$: Store<State>,
               private router: Router) {
