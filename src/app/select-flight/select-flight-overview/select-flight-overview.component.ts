@@ -9,6 +9,10 @@ import {formatDate, getNextDay} from '../../utils/date.utils';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/skip';
 
+/**
+ * This component has the list of flight categories to choose from.
+ */
+
 @Component({
   selector: 'wizz-select-flight-overview',
   template: `

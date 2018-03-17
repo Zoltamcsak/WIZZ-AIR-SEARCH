@@ -13,6 +13,10 @@ import {State} from '../reducer';
 import * as _ from 'lodash';
 import {City} from '../../cities/select-routes/city';
 
+/**
+ * This is a side effect that comes with ngrx (redux) store and it handles back end requests for cities
+ */
+
 @Injectable()
 export class CityEffect {
   @Effect() getCities: Observable<Action> = this.actions$
@@ -32,6 +36,10 @@ export class CityEffect {
     .map(([cityName, cities]) => {
       const originCity = _.find(cities, (city: City) => city.shortName === cityName);
       return new AddOrigin(originCity);
+    })
+    .catch(err => {
+      console.error(`An error occured when fetching origin city: ${err}`);
+      return Observable.of(new AddOrigin(null));
     });
 
   @Effect() addDestinationByShortname: Observable<Action> = this.actions$
@@ -41,6 +49,10 @@ export class CityEffect {
     .map(([cityName, cities]) => {
       const originCity = _.find(cities, (city: City) => city.shortName === cityName);
       return new AddDestination(originCity);
+    })
+    .catch(err => {
+      console.error(`An error occured when fetching destination city: ${err}`);
+      return Observable.of(new AddDestination(null));
     });
 
   constructor(private actions$: Actions,
